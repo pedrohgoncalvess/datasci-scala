@@ -1,9 +1,12 @@
 package init
 
-import org.apache.spark.mllib.linalg.{Vectors,Matrix,Matrices}
+import org.apache.spark.mllib.linalg.{Matrices, Matrix, Vector, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.rdd.RDD
+import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry, RowMatrix}
+import org.apache.spark.sql.SparkSession
 
-object newApp extends App{
+object simpleDataStructures extends App{
 
 
   println("=================VECTORS=================")
@@ -43,4 +46,48 @@ object newApp extends App{
   )
   println(matricesSparse)
 
+
+
+  //DISTRIBUTED MATRICES
+  println("=================DISTRIBUTED MATRICES=================")
+
+  def createSparkSession: SparkSession = {
+    val ss = SparkSession.builder()
+      .appName("Creating Spark Session")
+      .master("local")
+      .getOrCreate()
+    ss
+  }
+
+  val sc = createSparkSession.sparkContext
+  val rows: RDD[Vector] = sc.parallelize(Array(
+    Vectors.dense(1, 2),
+    Vectors.dense(4, 5),
+    Vectors.dense(7, 8)
+  ))
+
+  val mat: RowMatrix = new RowMatrix(rows)
+
+  val m = mat.numRows()
+  val n = mat.numCols()
+  println(mat)
+  println(m)
+  println(n)
+
+
+  println("CoordinateMatrix")
+
+  val entries: RDD[MatrixEntry] = sc.parallelize(Array(
+    MatrixEntry(0,0,9.0),
+    MatrixEntry(1,1,8.0),
+    MatrixEntry(2,1,6.0)
+  ))
+
+  val coordMat: CoordinateMatrix = new CoordinateMatrix(entries)
+
+  val coordM = coordMat.numRows()
+  val coordN = coordMat.numCols()
+  println(coordMat)
+  println(coordM)
+  println(coordN)
 }
