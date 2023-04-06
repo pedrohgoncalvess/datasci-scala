@@ -1,25 +1,18 @@
 package init
 
-import org.apache.spark.mllib.linalg.{Matrices, Matrix, Vector, Vectors}
-import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.linalg.{Matrix, Vector, Vectors}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry, RowMatrix}
-import org.apache.spark.sql.SparkSession
+import init._initSparkSession.createSparkSession
+import org.apache.spark.SparkContext
 import org.apache.spark.mllib.stat.{Statistics,MultivariateStatisticalSummary}
 import org.apache.spark.mllib.random.RandomRDDs._
 
 
 object statisticsData extends App{
-  def createSparkSession: SparkSession = {
-    val ss = SparkSession.builder()
-      .appName("Creating Spark Session")
-      .master("local")
-      .getOrCreate()
-    ss
-  }
 
-  val sc = createSparkSession.sparkContext //BASIC DATASET
-  val observations: RDD[Vector] = sc.parallelize(Array(
+  val sc: SparkContext = createSparkSession.sparkContext
+
+  val observations: RDD[Vector] = sc.parallelize(Array( //BASIC DATASET
     Vectors.dense(1.5, 2.3),
     Vectors.dense(4.1, 5.7),
     Vectors.dense(7.2, 8.8)

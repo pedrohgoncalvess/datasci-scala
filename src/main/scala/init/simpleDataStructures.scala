@@ -4,7 +4,8 @@ import org.apache.spark.mllib.linalg.{Matrices, Matrix, Vector, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd.RDD
 import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry, RowMatrix}
-import org.apache.spark.sql.SparkSession
+import init._initSparkSession.createSparkSession
+import org.apache.spark.SparkContext
 
 object simpleDataStructures extends App{
 
@@ -51,15 +52,8 @@ object simpleDataStructures extends App{
   //DISTRIBUTED MATRICES
   println("=================DISTRIBUTED MATRICES=================")
 
-  def createSparkSession: SparkSession = {
-    val ss = SparkSession.builder()
-      .appName("Creating Spark Session")
-      .master("local")
-      .getOrCreate()
-    ss
-  }
+  val sc: SparkContext = createSparkSession.sparkContext
 
-  val sc = createSparkSession.sparkContext
   val rows: RDD[Vector] = sc.parallelize(Array(
     Vectors.dense(1, 2),
     Vectors.dense(4, 5),
