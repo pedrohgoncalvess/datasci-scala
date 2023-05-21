@@ -1,14 +1,14 @@
-package init
+package data_statistics
 
-import org.apache.spark.mllib.linalg.{Matrix, Vector, Vectors}
-import org.apache.spark.rdd.RDD
-import init._initSparkSession.createSparkSession
 import org.apache.spark.SparkContext
-import org.apache.spark.mllib.stat.{Statistics,MultivariateStatisticalSummary}
-import org.apache.spark.mllib.random.RandomRDDs._
+import org.apache.spark.mllib.linalg.{Matrix, Vector, Vectors}
+
+import org.apache.spark.mllib.stat.{MultivariateStatisticalSummary, Statistics}
+import org.apache.spark.rdd.RDD
+import spark.initSpark.createSparkSession
 
 
-object statisticsData extends App{
+object correlation extends App{
 
   val sc: SparkContext = createSparkSession.sparkContext
 
@@ -57,17 +57,4 @@ object statisticsData extends App{
   println(corrPearsonMatrix)
   println(corrSpearmanMatrix)
 
-
-  //RANDOM DATA
-
-  val million = poissonRDD(sc,mean=1,size = 1000000L,numPartitions = 10)
-  println(million.mean)
-  println(million.variance)
-
-
-  //SIMPLE VECTOR EXAMPLE
-  val dataRandomVector = normalVectorRDD(sc,numRows=10000L, numCols = 3, numPartitions=10)
-  val statsRandomVector: MultivariateStatisticalSummary = Statistics.colStats(dataRandomVector)
-  println(statsRandomVector.mean)
-  println(statsRandomVector.variance)
 }

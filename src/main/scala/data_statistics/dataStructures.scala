@@ -1,13 +1,13 @@
-package init
+package data_statistics
 
-import org.apache.spark.mllib.linalg.{Matrices, Matrix, Vector, Vectors}
+import org.apache.spark.SparkContext
+import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry, RowMatrix}
+import org.apache.spark.mllib.linalg.{Matrices, Vector, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd.RDD
-import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry, RowMatrix}
-import init._initSparkSession.createSparkSession
-import org.apache.spark.SparkContext
+import spark.initSpark.createSparkSession
 
-object simpleDataStructures extends App{
+object dataStructures extends App{
 
 
   println("=================VECTORS=================")
