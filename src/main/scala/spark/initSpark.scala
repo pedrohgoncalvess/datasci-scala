@@ -2,7 +2,7 @@ package spark
 
 import org.apache.spark.sql.SparkSession
 
-object _initSparkSession{
+object initSpark{
   def createSparkSession: SparkSession = {
     val ss = SparkSession.builder()
       .appName("Creating Spark Session")
