@@ -1,4 +1,4 @@
-package data_statistics
+package basic_statistics
 
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry, RowMatrix}

@@ -1,4 +1,4 @@
-package data_statistics
+package basic_statistics
 
 import org.apache.spark.mllib.linalg.{Matrices, Matrix, Vector, Vectors}
 import org.apache.spark.mllib.random.RandomRDDs.{normalRDD, uniformRDD}
